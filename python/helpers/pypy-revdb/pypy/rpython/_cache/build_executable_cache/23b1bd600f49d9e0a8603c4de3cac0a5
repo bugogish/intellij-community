@@ -1,0 +1,728 @@
+-+- PyBufferObject
+align: 8
+size: 72
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs b_base: 24
+fldsize b_base: 8
+fldofs b_ptr: 32
+fldsize b_ptr: 8
+fldofs b_size: 40
+fldsize b_size: 8
+fldunsigned b_size: 0
+fldofs b_offset: 48
+fldsize b_offset: 8
+fldunsigned b_offset: 0
+fldofs b_readonly: 56
+fldsize b_readonly: 4
+fldunsigned b_readonly: 0
+fldofs b_hash: 64
+fldsize b_hash: 8
+fldunsigned b_hash: 0
+---
+-+- PyBufferProcs
+align: 8
+size: 48
+fldofs bf_getreadbuffer: 0
+fldsize bf_getreadbuffer: 8
+fldofs bf_getwritebuffer: 8
+fldsize bf_getwritebuffer: 8
+fldofs bf_getsegcount: 16
+fldsize bf_getsegcount: 8
+fldofs bf_getcharbuffer: 24
+fldsize bf_getcharbuffer: 8
+fldofs bf_getbuffer: 32
+fldsize bf_getbuffer: 8
+fldofs bf_releasebuffer: 40
+fldsize bf_releasebuffer: 8
+---
+-+- PyByteArrayObject
+align: 8
+size: 32
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs ob_size: 24
+fldsize ob_size: 8
+fldunsigned ob_size: 0
+---
+-+- PyCFunctionObject
+align: 8
+size: 48
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs m_ml: 24
+fldsize m_ml: 8
+fldofs m_self: 32
+fldsize m_self: 8
+fldofs m_module: 40
+fldsize m_module: 8
+---
+-+- PyCodeObject
+align: 8
+size: 48
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs co_name: 24
+fldsize co_name: 8
+fldofs co_filename: 32
+fldsize co_filename: 8
+fldofs co_flags: 44
+fldsize co_flags: 4
+fldunsigned co_flags: 0
+fldofs co_argcount: 40
+fldsize co_argcount: 4
+fldunsigned co_argcount: 0
+---
+-+- PyCompilerFlags
+align: 4
+size: 4
+fldofs cf_flags: 0
+fldsize cf_flags: 4
+fldunsigned cf_flags: 0
+---
+-+- PyComplexObject
+align: 8
+size: 40
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs cval: 24
+fldsize cval: 16
+---
+-+- PyDateTime_CAPI
+align: 8
+size: 72
+fldofs DateType: 0
+fldsize DateType: 8
+fldofs DateTimeType: 8
+fldsize DateTimeType: 8
+fldofs TimeType: 16
+fldsize TimeType: 8
+fldofs DeltaType: 24
+fldsize DeltaType: 8
+fldofs TZInfoType: 32
+fldsize TZInfoType: 8
+fldofs Date_FromDate: 40
+fldsize Date_FromDate: 8
+fldofs Time_FromTime: 56
+fldsize Time_FromTime: 8
+fldofs DateTime_FromDateAndTime: 48
+fldsize DateTime_FromDateAndTime: 8
+fldofs Delta_FromDelta: 64
+fldsize Delta_FromDelta: 8
+---
+-+- PyDateTime_Date
+align: 8
+size: 24
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+---
+-+- PyDateTime_DateTime
+align: 8
+size: 24
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+---
+-+- PyDateTime_Delta
+align: 8
+size: 24
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+---
+-+- PyDateTime_Time
+align: 8
+size: 24
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+---
+-+- PyDescrObject
+align: 8
+size: 40
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs d_type: 24
+fldsize d_type: 8
+fldofs d_name: 32
+fldsize d_name: 8
+---
+-+- PyDictObject
+align: 8
+size: 32
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs _tmpkeys: 24
+fldsize _tmpkeys: 8
+---
+-+- PyFloatObject
+align: 8
+size: 32
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs ob_fval: 24
+fldsize ob_fval: 8
+---
+-+- PyFrameObject
+align: 8
+size: 56
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs f_code: 24
+fldsize f_code: 8
+fldofs f_globals: 32
+fldsize f_globals: 8
+fldofs f_locals: 40
+fldsize f_locals: 8
+fldofs f_lineno: 48
+fldsize f_lineno: 4
+fldunsigned f_lineno: 0
+---
+-+- PyFunctionObject
+align: 8
+size: 32
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs func_name: 24
+fldsize func_name: 8
+---
+-+- PyGetSetDef
+align: 8
+size: 40
+fldofs name: 0
+fldsize name: 8
+fldofs get: 8
+fldsize get: 8
+fldofs set: 16
+fldsize set: 8
+fldofs doc: 24
+fldsize doc: 8
+fldofs closure: 32
+fldsize closure: 8
+---
+-+- PyIntObject
+align: 8
+size: 32
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs ob_ival: 24
+fldsize ob_ival: 8
+fldunsigned ob_ival: 0
+---
+-+- PyInterpreterState
+align: 8
+size: 8
+fldofs next: 0
+fldsize next: 8
+---
+-+- PyMappingMethods
+align: 8
+size: 24
+fldofs mp_length: 0
+fldsize mp_length: 8
+fldofs mp_subscript: 8
+fldsize mp_subscript: 8
+fldofs mp_ass_subscript: 16
+fldsize mp_ass_subscript: 8
+---
+-+- PyMemberDef
+align: 8
+size: 40
+fldofs name: 0
+fldsize name: 8
+fldofs type: 8
+fldsize type: 4
+fldofs offset: 16
+fldsize offset: 8
+fldunsigned offset: 0
+fldofs flags: 24
+fldsize flags: 4
+fldofs doc: 32
+fldsize doc: 8
+---
+-+- PyMethodDef
+align: 8
+size: 32
+fldofs ml_name: 0
+fldsize ml_name: 8
+fldofs ml_meth: 8
+fldsize ml_meth: 8
+fldofs ml_flags: 16
+fldsize ml_flags: 4
+fldofs ml_doc: 24
+fldsize ml_doc: 8
+---
+-+- PyNumberMethods
+align: 8
+size: 312
+fldofs nb_add: 0
+fldsize nb_add: 8
+fldofs nb_subtract: 8
+fldsize nb_subtract: 8
+fldofs nb_multiply: 16
+fldsize nb_multiply: 8
+fldofs nb_divide: 24
+fldsize nb_divide: 8
+fldofs nb_remainder: 32
+fldsize nb_remainder: 8
+fldofs nb_divmod: 40
+fldsize nb_divmod: 8
+fldofs nb_power: 48
+fldsize nb_power: 8
+fldofs nb_negative: 56
+fldsize nb_negative: 8
+fldofs nb_positive: 64
+fldsize nb_positive: 8
+fldofs nb_absolute: 72
+fldsize nb_absolute: 8
+fldofs nb_nonzero: 80
+fldsize nb_nonzero: 8
+fldofs nb_invert: 88
+fldsize nb_invert: 8
+fldofs nb_lshift: 96
+fldsize nb_lshift: 8
+fldofs nb_rshift: 104
+fldsize nb_rshift: 8
+fldofs nb_and: 112
+fldsize nb_and: 8
+fldofs nb_xor: 120
+fldsize nb_xor: 8
+fldofs nb_or: 128
+fldsize nb_or: 8
+fldofs nb_coerce: 136
+fldsize nb_coerce: 8
+fldofs nb_int: 144
+fldsize nb_int: 8
+fldofs nb_long: 152
+fldsize nb_long: 8
+fldofs nb_float: 160
+fldsize nb_float: 8
+fldofs nb_oct: 168
+fldsize nb_oct: 8
+fldofs nb_hex: 176
+fldsize nb_hex: 8
+fldofs nb_inplace_add: 184
+fldsize nb_inplace_add: 8
+fldofs nb_inplace_subtract: 192
+fldsize nb_inplace_subtract: 8
+fldofs nb_inplace_multiply: 200
+fldsize nb_inplace_multiply: 8
+fldofs nb_inplace_divide: 208
+fldsize nb_inplace_divide: 8
+fldofs nb_inplace_remainder: 216
+fldsize nb_inplace_remainder: 8
+fldofs nb_inplace_power: 224
+fldsize nb_inplace_power: 8
+fldofs nb_inplace_lshift: 232
+fldsize nb_inplace_lshift: 8
+fldofs nb_inplace_rshift: 240
+fldsize nb_inplace_rshift: 8
+fldofs nb_inplace_and: 248
+fldsize nb_inplace_and: 8
+fldofs nb_inplace_xor: 256
+fldsize nb_inplace_xor: 8
+fldofs nb_inplace_or: 264
+fldsize nb_inplace_or: 8
+fldofs nb_floor_divide: 272
+fldsize nb_floor_divide: 8
+fldofs nb_true_divide: 280
+fldsize nb_true_divide: 8
+fldofs nb_inplace_floor_divide: 288
+fldsize nb_inplace_floor_divide: 8
+fldofs nb_inplace_true_divide: 296
+fldsize nb_inplace_true_divide: 8
+fldofs nb_index: 304
+fldsize nb_index: 8
+---
+-+- PyObject
+align: 8
+size: 24
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+---
+-+- PySequenceMethods
+align: 8
+size: 80
+fldofs sq_length: 0
+fldsize sq_length: 8
+fldofs sq_concat: 8
+fldsize sq_concat: 8
+fldofs sq_repeat: 16
+fldsize sq_repeat: 8
+fldofs sq_item: 24
+fldsize sq_item: 8
+fldofs sq_slice: 32
+fldsize sq_slice: 8
+fldofs sq_ass_item: 40
+fldsize sq_ass_item: 8
+fldofs sq_ass_slice: 48
+fldsize sq_ass_slice: 8
+fldofs sq_contains: 56
+fldsize sq_contains: 8
+fldofs sq_inplace_concat: 64
+fldsize sq_inplace_concat: 8
+fldofs sq_inplace_repeat: 72
+fldsize sq_inplace_repeat: 8
+---
+-+- PySliceObject
+align: 8
+size: 48
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs start: 24
+fldsize start: 8
+fldofs step: 40
+fldsize step: 8
+fldofs stop: 32
+fldsize stop: 8
+---
+-+- PyStringObject
+align: 8
+size: 48
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs ob_size: 24
+fldsize ob_size: 8
+fldunsigned ob_size: 0
+fldofs ob_shash: 32
+fldsize ob_shash: 8
+fldunsigned ob_shash: 0
+fldofs ob_sstate: 40
+fldsize ob_sstate: 4
+fldunsigned ob_sstate: 0
+fldofs ob_sval: 44
+fldsize ob_sval: 1
+---
+-+- PyThreadState
+align: 8
+size: 16
+fldofs interp: 0
+fldsize interp: 8
+fldofs dict: 8
+fldsize dict: 8
+---
+-+- PyTracebackObject
+align: 8
+size: 48
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs tb_next: 24
+fldsize tb_next: 8
+fldofs tb_frame: 32
+fldsize tb_frame: 8
+fldofs tb_lasti: 40
+fldsize tb_lasti: 4
+fldunsigned tb_lasti: 0
+fldofs tb_lineno: 44
+fldsize tb_lineno: 4
+fldunsigned tb_lineno: 0
+---
+-+- PyTupleObject
+align: 8
+size: 40
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs ob_size: 24
+fldsize ob_size: 8
+fldunsigned ob_size: 0
+fldofs ob_item: 32
+fldsize ob_item: 8
+---
+-+- PyTypeObject
+align: 8
+size: 400
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs ob_size: 24
+fldsize ob_size: 8
+fldunsigned ob_size: 0
+fldofs tp_name: 32
+fldsize tp_name: 8
+fldofs tp_basicsize: 40
+fldsize tp_basicsize: 8
+fldunsigned tp_basicsize: 0
+fldofs tp_itemsize: 48
+fldsize tp_itemsize: 8
+fldunsigned tp_itemsize: 0
+fldofs tp_dealloc: 56
+fldsize tp_dealloc: 8
+fldofs tp_print: 64
+fldsize tp_print: 8
+fldofs tp_getattr: 72
+fldsize tp_getattr: 8
+fldofs tp_setattr: 80
+fldsize tp_setattr: 8
+fldofs tp_compare: 88
+fldsize tp_compare: 8
+fldofs tp_repr: 96
+fldsize tp_repr: 8
+fldofs tp_as_number: 104
+fldsize tp_as_number: 8
+fldofs tp_as_sequence: 112
+fldsize tp_as_sequence: 8
+fldofs tp_as_mapping: 120
+fldsize tp_as_mapping: 8
+fldofs tp_hash: 128
+fldsize tp_hash: 8
+fldofs tp_call: 136
+fldsize tp_call: 8
+fldofs tp_str: 144
+fldsize tp_str: 8
+fldofs tp_getattro: 152
+fldsize tp_getattro: 8
+fldofs tp_setattro: 160
+fldsize tp_setattro: 8
+fldofs tp_as_buffer: 168
+fldsize tp_as_buffer: 8
+fldofs tp_flags: 176
+fldsize tp_flags: 8
+fldunsigned tp_flags: 0
+fldofs tp_doc: 184
+fldsize tp_doc: 8
+fldofs tp_traverse: 192
+fldsize tp_traverse: 8
+fldofs tp_clear: 200
+fldsize tp_clear: 8
+fldofs tp_richcompare: 208
+fldsize tp_richcompare: 8
+fldofs tp_weaklistoffset: 216
+fldsize tp_weaklistoffset: 8
+fldunsigned tp_weaklistoffset: 0
+fldofs tp_iter: 224
+fldsize tp_iter: 8
+fldofs tp_iternext: 232
+fldsize tp_iternext: 8
+fldofs tp_methods: 240
+fldsize tp_methods: 8
+fldofs tp_members: 248
+fldsize tp_members: 8
+fldofs tp_getset: 256
+fldsize tp_getset: 8
+fldofs tp_base: 264
+fldsize tp_base: 8
+fldofs tp_dict: 272
+fldsize tp_dict: 8
+fldofs tp_descr_get: 280
+fldsize tp_descr_get: 8
+fldofs tp_descr_set: 288
+fldsize tp_descr_set: 8
+fldofs tp_dictoffset: 296
+fldsize tp_dictoffset: 8
+fldunsigned tp_dictoffset: 0
+fldofs tp_init: 304
+fldsize tp_init: 8
+fldofs tp_alloc: 312
+fldsize tp_alloc: 8
+fldofs tp_new: 320
+fldsize tp_new: 8
+fldofs tp_free: 328
+fldsize tp_free: 8
+fldofs tp_is_gc: 336
+fldsize tp_is_gc: 8
+fldofs tp_bases: 344
+fldsize tp_bases: 8
+fldofs tp_mro: 352
+fldsize tp_mro: 8
+fldofs tp_cache: 360
+fldsize tp_cache: 8
+fldofs tp_subclasses: 368
+fldsize tp_subclasses: 8
+fldofs tp_weaklist: 376
+fldsize tp_weaklist: 8
+fldofs tp_del: 384
+fldsize tp_del: 8
+---
+-+- PyUnicodeObject
+align: 8
+size: 56
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs str: 24
+fldsize str: 8
+fldofs length: 32
+fldsize length: 8
+fldunsigned length: 0
+fldofs hash: 40
+fldsize hash: 8
+fldunsigned hash: 0
+fldofs defenc: 48
+fldsize defenc: 8
+---
+-+- PyVarObject
+align: 8
+size: 32
+fldofs ob_refcnt: 0
+fldsize ob_refcnt: 8
+fldunsigned ob_refcnt: 0
+fldofs ob_pypy_link: 8
+fldsize ob_pypy_link: 8
+fldunsigned ob_pypy_link: 0
+fldofs ob_type: 16
+fldsize ob_type: 8
+fldofs ob_size: 24
+fldsize ob_size: 8
+fldunsigned ob_size: 0
+---
+-+- Py_buffer
+align: 8
+size: 720
+fldofs buf: 0
+fldsize buf: 8
+fldofs obj: 8
+fldsize obj: 8
+fldofs len: 16
+fldsize len: 8
+fldunsigned len: 0
+fldofs itemsize: 24
+fldsize itemsize: 8
+fldunsigned itemsize: 0
+fldofs readonly: 32
+fldsize readonly: 4
+fldofs ndim: 36
+fldsize ndim: 4
+fldofs format: 40
+fldsize format: 8
+fldofs shape: 48
+fldsize shape: 8
+fldofs strides: 56
+fldsize strides: 8
+fldofs suboffsets: 64
+fldsize suboffsets: 8
+fldofs _format: 72
+fldsize _format: 128
+fldofs _shape: 456
+fldsize _shape: 256
+fldofs _strides: 200
+fldsize _strides: 256
+fldofs internal: 712
+fldsize internal: 8
+---

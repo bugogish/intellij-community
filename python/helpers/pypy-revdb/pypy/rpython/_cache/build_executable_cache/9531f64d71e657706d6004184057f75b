@@ -1,0 +1,9 @@
+-+- LIBRESSL
+defined: 0
+---
+-+- OPENSSL_EXPORT_VAR_AS_FUNCTION
+defined: 0
+---
+-+- OPENSSL_VERSION_NUMBER
+value: 268443775
+---

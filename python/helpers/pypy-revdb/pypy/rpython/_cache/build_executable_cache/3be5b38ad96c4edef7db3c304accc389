@@ -1,0 +1,37 @@
+-+- z_stream
+align: 8
+size: 112
+fldofs next_in: 0
+fldsize next_in: 8
+fldofs avail_in: 8
+fldsize avail_in: 4
+fldunsigned avail_in: 1
+fldofs total_in: 16
+fldsize total_in: 8
+fldunsigned total_in: 1
+fldofs next_out: 24
+fldsize next_out: 8
+fldofs avail_out: 32
+fldsize avail_out: 4
+fldunsigned avail_out: 1
+fldofs total_out: 40
+fldsize total_out: 8
+fldunsigned total_out: 1
+fldofs msg: 48
+fldsize msg: 8
+fldofs zalloc: 64
+fldsize zalloc: 8
+fldofs zfree: 72
+fldsize zfree: 8
+fldofs opaque: 80
+fldsize opaque: 8
+fldofs data_type: 88
+fldsize data_type: 4
+fldunsigned data_type: 0
+fldofs adler: 96
+fldsize adler: 8
+fldunsigned adler: 1
+fldofs reserved: 104
+fldsize reserved: 8
+fldunsigned reserved: 1
+---

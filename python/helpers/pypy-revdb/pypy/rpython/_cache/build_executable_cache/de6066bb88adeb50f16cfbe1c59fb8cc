@@ -1,0 +1,53 @@
+-+- CLOCKS_PER_SEC
+value: 1000000
+---
+-+- clock_t
+size: 8
+unsigned: 0
+---
+-+- timeval
+align: 8
+size: 16
+fldofs tv_sec: 0
+fldsize tv_sec: 8
+fldunsigned tv_sec: 0
+fldofs tv_usec: 8
+fldsize tv_usec: 8
+fldunsigned tv_usec: 0
+---
+-+- tm
+align: 8
+size: 56
+fldofs tm_sec: 0
+fldsize tm_sec: 4
+fldunsigned tm_sec: 0
+fldofs tm_min: 4
+fldsize tm_min: 4
+fldunsigned tm_min: 0
+fldofs tm_hour: 8
+fldsize tm_hour: 4
+fldunsigned tm_hour: 0
+fldofs tm_mday: 12
+fldsize tm_mday: 4
+fldunsigned tm_mday: 0
+fldofs tm_mon: 16
+fldsize tm_mon: 4
+fldunsigned tm_mon: 0
+fldofs tm_year: 20
+fldsize tm_year: 4
+fldunsigned tm_year: 0
+fldofs tm_wday: 24
+fldsize tm_wday: 4
+fldunsigned tm_wday: 0
+fldofs tm_yday: 28
+fldsize tm_yday: 4
+fldunsigned tm_yday: 0
+fldofs tm_isdst: 32
+fldsize tm_isdst: 4
+fldunsigned tm_isdst: 0
+fldofs tm_gmtoff: 40
+fldsize tm_gmtoff: 8
+fldunsigned tm_gmtoff: 0
+fldofs tm_zone: 48
+fldsize tm_zone: 8
+---

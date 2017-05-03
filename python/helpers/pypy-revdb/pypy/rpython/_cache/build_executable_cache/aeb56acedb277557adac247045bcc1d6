@@ -1,0 +1,918 @@
+-+- B0
+defined: 1
+value: 0
+---
+-+- B110
+defined: 1
+value: 3
+---
+-+- B115200
+defined: 1
+value: 4098
+---
+-+- B1200
+defined: 1
+value: 9
+---
+-+- B134
+defined: 1
+value: 4
+---
+-+- B150
+defined: 1
+value: 5
+---
+-+- B1800
+defined: 1
+value: 10
+---
+-+- B19200
+defined: 1
+value: 14
+---
+-+- B200
+defined: 1
+value: 6
+---
+-+- B230400
+defined: 1
+value: 4099
+---
+-+- B2400
+defined: 1
+value: 11
+---
+-+- B300
+defined: 1
+value: 7
+---
+-+- B38400
+defined: 1
+value: 15
+---
+-+- B460800
+defined: 1
+value: 4100
+---
+-+- B4800
+defined: 1
+value: 12
+---
+-+- B50
+defined: 1
+value: 1
+---
+-+- B57600
+defined: 1
+value: 4097
+---
+-+- B600
+defined: 1
+value: 8
+---
+-+- B75
+defined: 1
+value: 2
+---
+-+- B9600
+defined: 1
+value: 13
+---
+-+- BRKINT
+defined: 1
+value: 2
+---
+-+- BS0
+defined: 1
+value: 0
+---
+-+- BS1
+defined: 1
+value: 8192
+---
+-+- BSDLY
+defined: 1
+value: 8192
+---
+-+- CBAUD
+defined: 1
+value: 4111
+---
+-+- CBAUDEX
+defined: 1
+value: 4096
+---
+-+- CDEL
+defined: 0
+---
+-+- CDSUSP
+defined: 1
+value: 25
+---
+-+- CEOF
+defined: 1
+value: 4
+---
+-+- CEOL
+defined: 1
+value: 0
+---
+-+- CEOL2
+defined: 0
+---
+-+- CEOT
+defined: 1
+value: 4
+---
+-+- CERASE
+defined: 1
+value: 127
+---
+-+- CESC
+defined: 0
+---
+-+- CFLUSH
+defined: 1
+value: 15
+---
+-+- CIBAUD
+defined: 1
+value: 269418496
+---
+-+- CINTR
+defined: 1
+value: 3
+---
+-+- CKILL
+defined: 1
+value: 21
+---
+-+- CLNEXT
+defined: 1
+value: 22
+---
+-+- CLOCAL
+defined: 1
+value: 2048
+---
+-+- CNUL
+defined: 0
+---
+-+- COMMON
+defined: 0
+---
+-+- CQUIT
+defined: 1
+value: 28
+---
+-+- CR0
+defined: 1
+value: 0
+---
+-+- CR1
+defined: 1
+value: 512
+---
+-+- CR2
+defined: 1
+value: 1024
+---
+-+- CR3
+defined: 1
+value: 1536
+---
+-+- CRDLY
+defined: 1
+value: 1536
+---
+-+- CREAD
+defined: 1
+value: 128
+---
+-+- CRPRNT
+defined: 1
+value: 18
+---
+-+- CRTSCTS
+defined: 1
+value: 2147483648
+---
+-+- CS5
+defined: 1
+value: 0
+---
+-+- CS6
+defined: 1
+value: 16
+---
+-+- CS7
+defined: 1
+value: 32
+---
+-+- CS8
+defined: 1
+value: 48
+---
+-+- CSIZE
+defined: 1
+value: 48
+---
+-+- CSTART
+defined: 1
+value: 17
+---
+-+- CSTOP
+defined: 1
+value: 19
+---
+-+- CSTOPB
+defined: 1
+value: 64
+---
+-+- CSUSP
+defined: 1
+value: 26
+---
+-+- CSWTCH
+defined: 0
+---
+-+- CWERASE
+defined: 1
+value: 23
+---
+-+- ECHO
+defined: 1
+value: 8
+---
+-+- ECHOCTL
+defined: 1
+value: 512
+---
+-+- ECHOE
+defined: 1
+value: 16
+---
+-+- ECHOK
+defined: 1
+value: 32
+---
+-+- ECHOKE
+defined: 1
+value: 2048
+---
+-+- ECHONL
+defined: 1
+value: 64
+---
+-+- ECHOPRT
+defined: 1
+value: 1024
+---
+-+- EXTA
+defined: 1
+value: 14
+---
+-+- EXTB
+defined: 1
+value: 15
+---
+-+- FF0
+defined: 1
+value: 0
+---
+-+- FF1
+defined: 1
+value: 32768
+---
+-+- FFDLY
+defined: 1
+value: 32768
+---
+-+- FIOASYNC
+defined: 1
+value: 21586
+---
+-+- FIOCLEX
+defined: 1
+value: 21585
+---
+-+- FIONBIO
+defined: 1
+value: 21537
+---
+-+- FIONCLEX
+defined: 1
+value: 21584
+---
+-+- FIONREAD
+defined: 1
+value: 21531
+---
+-+- FLUSHO
+defined: 1
+value: 4096
+---
+-+- HUPCL
+defined: 1
+value: 1024
+---
+-+- IBSHIFT
+defined: 0
+---
+-+- ICANON
+defined: 1
+value: 2
+---
+-+- ICRNL
+defined: 1
+value: 256
+---
+-+- IEXTEN
+defined: 1
+value: 32768
+---
+-+- IGNBRK
+defined: 1
+value: 1
+---
+-+- IGNCR
+defined: 1
+value: 128
+---
+-+- IGNPAR
+defined: 1
+value: 4
+---
+-+- IMAXBEL
+defined: 1
+value: 8192
+---
+-+- INIT_C_CC
+defined: 0
+---
+-+- INLCR
+defined: 1
+value: 64
+---
+-+- INPCK
+defined: 1
+value: 16
+---
+-+- IOCSIZE_MASK
+defined: 1
+value: 1073676288
+---
+-+- IOCSIZE_SHIFT
+defined: 1
+value: 16
+---
+-+- ISIG
+defined: 1
+value: 1
+---
+-+- ISTRIP
+defined: 1
+value: 32
+---
+-+- IUCLC
+defined: 1
+value: 512
+---
+-+- IXANY
+defined: 1
+value: 2048
+---
+-+- IXOFF
+defined: 1
+value: 4096
+---
+-+- IXON
+defined: 1
+value: 1024
+---
+-+- NCC
+defined: 1
+value: 8
+---
+-+- NCCS
+defined: 1
+value: 32
+---
+-+- NL0
+defined: 1
+value: 0
+---
+-+- NL1
+defined: 1
+value: 256
+---
+-+- NLDLY
+defined: 1
+value: 256
+---
+-+- NOFLSH
+defined: 1
+value: 128
+---
+-+- NSWTCH
+defined: 0
+---
+-+- N_MOUSE
+defined: 1
+value: 2
+---
+-+- N_PPP
+defined: 1
+value: 3
+---
+-+- N_SLIP
+defined: 1
+value: 1
+---
+-+- N_STRIP
+defined: 1
+value: 4
+---
+-+- N_TTY
+defined: 1
+value: 0
+---
+-+- OCRNL
+defined: 1
+value: 8
+---
+-+- OFDEL
+defined: 1
+value: 128
+---
+-+- OFILL
+defined: 1
+value: 64
+---
+-+- OLCUC
+defined: 1
+value: 2
+---
+-+- ONLCR
+defined: 1
+value: 4
+---
+-+- ONLRET
+defined: 1
+value: 32
+---
+-+- ONOCR
+defined: 1
+value: 16
+---
+-+- OPOST
+defined: 1
+value: 1
+---
+-+- PARENB
+defined: 1
+value: 256
+---
+-+- PARMRK
+defined: 1
+value: 8
+---
+-+- PARODD
+defined: 1
+value: 512
+---
+-+- PENDIN
+defined: 1
+value: 16384
+---
+-+- TAB0
+defined: 1
+value: 0
+---
+-+- TAB1
+defined: 1
+value: 2048
+---
+-+- TAB2
+defined: 1
+value: 4096
+---
+-+- TAB3
+defined: 1
+value: 6144
+---
+-+- TABDLY
+defined: 1
+value: 6144
+---
+-+- TCFLSH
+defined: 1
+value: 21515
+---
+-+- TCGETA
+defined: 1
+value: 21509
+---
+-+- TCGETS
+defined: 1
+value: 21505
+---
+-+- TCIFLUSH
+defined: 1
+value: 0
+---
+-+- TCIOFF
+defined: 1
+value: 2
+---
+-+- TCIOFLUSH
+defined: 1
+value: 2
+---
+-+- TCION
+defined: 1
+value: 3
+---
+-+- TCOFLUSH
+defined: 1
+value: 1
+---
+-+- TCOOFF
+defined: 1
+value: 0
+---
+-+- TCOON
+defined: 1
+value: 1
+---
+-+- TCSADRAIN
+defined: 1
+value: 1
+---
+-+- TCSAFLUSH
+defined: 1
+value: 2
+---
+-+- TCSANOW
+defined: 1
+value: 0
+---
+-+- TCSASOFT
+defined: 0
+---
+-+- TCSBRK
+defined: 1
+value: 21513
+---
+-+- TCSBRKP
+defined: 1
+value: 21541
+---
+-+- TCSETA
+defined: 1
+value: 21510
+---
+-+- TCSETAF
+defined: 1
+value: 21512
+---
+-+- TCSETAW
+defined: 1
+value: 21511
+---
+-+- TCSETS
+defined: 1
+value: 21506
+---
+-+- TCSETSF
+defined: 1
+value: 21508
+---
+-+- TCSETSW
+defined: 1
+value: 21507
+---
+-+- TCXONC
+defined: 1
+value: 21514
+---
+-+- TIOCCONS
+defined: 1
+value: 21533
+---
+-+- TIOCEXCL
+defined: 1
+value: 21516
+---
+-+- TIOCGETD
+defined: 1
+value: 21540
+---
+-+- TIOCGICOUNT
+defined: 1
+value: 21597
+---
+-+- TIOCGLCKTRMIOS
+defined: 1
+value: 21590
+---
+-+- TIOCGPGRP
+defined: 1
+value: 21519
+---
+-+- TIOCGSERIAL
+defined: 1
+value: 21534
+---
+-+- TIOCGSOFTCAR
+defined: 1
+value: 21529
+---
+-+- TIOCGWINSZ
+defined: 1
+value: 21523
+---
+-+- TIOCINQ
+defined: 1
+value: 21531
+---
+-+- TIOCLINUX
+defined: 1
+value: 21532
+---
+-+- TIOCMBIC
+defined: 1
+value: 21527
+---
+-+- TIOCMBIS
+defined: 1
+value: 21526
+---
+-+- TIOCMGET
+defined: 1
+value: 21525
+---
+-+- TIOCMIWAIT
+defined: 1
+value: 21596
+---
+-+- TIOCMSET
+defined: 1
+value: 21528
+---
+-+- TIOCM_CAR
+defined: 1
+value: 64
+---
+-+- TIOCM_CD
+defined: 1
+value: 64
+---
+-+- TIOCM_CTS
+defined: 1
+value: 32
+---
+-+- TIOCM_DSR
+defined: 1
+value: 256
+---
+-+- TIOCM_DTR
+defined: 1
+value: 2
+---
+-+- TIOCM_LE
+defined: 1
+value: 1
+---
+-+- TIOCM_RI
+defined: 1
+value: 128
+---
+-+- TIOCM_RNG
+defined: 1
+value: 128
+---
+-+- TIOCM_RTS
+defined: 1
+value: 4
+---
+-+- TIOCM_SR
+defined: 1
+value: 16
+---
+-+- TIOCM_ST
+defined: 1
+value: 8
+---
+-+- TIOCNOTTY
+defined: 1
+value: 21538
+---
+-+- TIOCNXCL
+defined: 1
+value: 21517
+---
+-+- TIOCOUTQ
+defined: 1
+value: 21521
+---
+-+- TIOCPKT
+defined: 1
+value: 21536
+---
+-+- TIOCPKT_DATA
+defined: 1
+value: 0
+---
+-+- TIOCPKT_DOSTOP
+defined: 1
+value: 32
+---
+-+- TIOCPKT_FLUSHREAD
+defined: 1
+value: 1
+---
+-+- TIOCPKT_FLUSHWRITE
+defined: 1
+value: 2
+---
+-+- TIOCPKT_NOSTOP
+defined: 1
+value: 16
+---
+-+- TIOCPKT_START
+defined: 1
+value: 8
+---
+-+- TIOCPKT_STOP
+defined: 1
+value: 4
+---
+-+- TIOCSCTTY
+defined: 1
+value: 21518
+---
+-+- TIOCSERCONFIG
+defined: 1
+value: 21587
+---
+-+- TIOCSERGETLSR
+defined: 1
+value: 21593
+---
+-+- TIOCSERGETMULTI
+defined: 1
+value: 21594
+---
+-+- TIOCSERGSTRUCT
+defined: 1
+value: 21592
+---
+-+- TIOCSERGWILD
+defined: 1
+value: 21588
+---
+-+- TIOCSERSETMULTI
+defined: 1
+value: 21595
+---
+-+- TIOCSERSWILD
+defined: 1
+value: 21589
+---
+-+- TIOCSER_TEMT
+defined: 1
+value: 1
+---
+-+- TIOCSETD
+defined: 1
+value: 21539
+---
+-+- TIOCSLCKTRMIOS
+defined: 1
+value: 21591
+---
+-+- TIOCSPGRP
+defined: 1
+value: 21520
+---
+-+- TIOCSSERIAL
+defined: 1
+value: 21535
+---
+-+- TIOCSSOFTCAR
+defined: 1
+value: 21530
+---
+-+- TIOCSTI
+defined: 1
+value: 21522
+---
+-+- TIOCSWINSZ
+defined: 1
+value: 21524
+---
+-+- TIOCTTYGSTRUCT
+defined: 0
+---
+-+- TOSTOP
+defined: 1
+value: 256
+---
+-+- VDISCARD
+defined: 1
+value: 13
+---
+-+- VEOF
+defined: 1
+value: 4
+---
+-+- VEOL
+defined: 1
+value: 11
+---
+-+- VEOL2
+defined: 1
+value: 16
+---
+-+- VERASE
+defined: 1
+value: 2
+---
+-+- VINTR
+defined: 1
+value: 0
+---
+-+- VKILL
+defined: 1
+value: 3
+---
+-+- VLNEXT
+defined: 1
+value: 15
+---
+-+- VMIN
+defined: 1
+value: 6
+---
+-+- VQUIT
+defined: 1
+value: 1
+---
+-+- VREPRINT
+defined: 1
+value: 12
+---
+-+- VSTART
+defined: 1
+value: 8
+---
+-+- VSTOP
+defined: 1
+value: 9
+---
+-+- VSUSP
+defined: 1
+value: 10
+---
+-+- VSWTC
+defined: 1
+value: 7
+---
+-+- VSWTCH
+defined: 0
+---
+-+- VT0
+defined: 1
+value: 0
+---
+-+- VT1
+defined: 1
+value: 16384
+---
+-+- VTDLY
+defined: 1
+value: 16384
+---
+-+- VTIME
+defined: 1
+value: 5
+---
+-+- VWERASE
+defined: 1
+value: 14
+---
+-+- XCASE
+defined: 1
+value: 4
+---
+-+- XTABS
+defined: 1
+value: 6144
+---
+-+- _HAVE_STRUCT_TERMIOS_C_ISPEED
+defined: 1
+---
+-+- _HAVE_STRUCT_TERMIOS_C_OSPEED
+defined: 1
+---

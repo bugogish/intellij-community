@@ -1,0 +1,275 @@
+-+- ACCESS_DESCRIPTION_st
+align: 8
+size: 16
+fldofs method: 0
+fldsize method: 8
+fldofs location: 8
+fldsize location: 8
+---
+-+- ASN1_R_HEADER_TOO_LONG
+value: 123
+---
+-+- CRYPTO_LOCK
+value: 1
+---
+-+- ERR_LIB_ASN1
+value: 13
+---
+-+- ERR_LIB_PEM
+value: 9
+---
+-+- ERR_LIB_X509
+value: 11
+---
+-+- GENERAL_NAME_st
+align: 8
+size: 16
+fldofs type: 0
+fldsize type: 4
+fldunsigned type: 0
+---
+-+- GEN_DIRNAME
+value: 4
+---
+-+- GEN_DNS
+value: 2
+---
+-+- GEN_EDIPARTY
+value: 5
+---
+-+- GEN_EMAIL
+value: 1
+---
+-+- GEN_IPADD
+value: 7
+---
+-+- GEN_OTHERNAME
+value: 0
+---
+-+- GEN_RID
+value: 8
+---
+-+- GEN_URI
+value: 6
+---
+-+- GEN_X400
+value: 3
+---
+-+- HAS_NPN
+defined: 1
+---
+-+- HAS_SNI
+defined: 1
+---
+-+- NID_X9_62_prime256v1
+value: 415
+---
+-+- NID_ad_OCSP
+value: 178
+---
+-+- NID_ad_ca_issuers
+value: 179
+---
+-+- NID_crl_distribution_points
+value: 103
+---
+-+- NID_info_access
+value: 177
+---
+-+- NID_subject_alt_name
+value: 85
+---
+-+- NID_undef
+value: 0
+---
+-+- OBJ_NAME_TYPE_MD_METH
+value: 1
+---
+-+- OBJ_NAME_st
+align: 8
+size: 24
+fldofs alias: 4
+fldsize alias: 4
+fldunsigned alias: 0
+fldofs name: 8
+fldsize name: 8
+---
+-+- OPENSSL_NO_ECDH
+defined: 0
+---
+-+- OPENSSL_NO_SSL2
+defined: 1
+---
+-+- OPENSSL_NO_SSL3
+defined: 1
+---
+-+- OPENSSL_NO_TLSEXT
+defined: 0
+---
+-+- OPENSSL_NPN_NEGOTIATED
+defined: 1
+---
+-+- PEM_R_NO_START_LINE
+value: 108
+---
+-+- SSLEAY_VERSION
+defined: 1
+value_0: 79
+value_1: 112
+value_2: 101
+value_3: 110
+value_4: 83
+value_5: 83
+value_6: 76
+value_7: 32
+value_8: 49
+value_9: 46
+value_10: 48
+value_11: 46
+value_12: 50
+value_13: 103
+value_14: 32
+value_15: 32
+value_16: 49
+value_17: 32
+value_18: 77
+value_19: 97
+value_20: 114
+value_21: 32
+value_22: 50
+value_23: 48
+value_24: 49
+value_25: 54
+---
+-+- SSL_AD_HANDSHAKE_FAILURE
+value: 40
+---
+-+- SSL_AD_INTERNAL_ERROR
+value: 80
+---
+-+- SSL_ERROR_SSL
+value: 1
+---
+-+- SSL_ERROR_SYSCALL
+value: 5
+---
+-+- SSL_ERROR_WANT_CONNECT
+value: 7
+---
+-+- SSL_ERROR_WANT_READ
+value: 2
+---
+-+- SSL_ERROR_WANT_WRITE
+value: 3
+---
+-+- SSL_ERROR_WANT_X509_LOOKUP
+value: 4
+---
+-+- SSL_ERROR_ZERO_RETURN
+value: 6
+---
+-+- SSL_FILETYPE_ASN1
+value: 2
+---
+-+- SSL_FILETYPE_PEM
+value: 1
+---
+-+- SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER
+value: 2
+---
+-+- SSL_MODE_AUTO_RETRY
+value: 4
+---
+-+- SSL_OP_ALL
+value: 2147486719
+---
+-+- SSL_OP_CIPHER_SERVER_PREFERENCE
+value: 4194304
+---
+-+- SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS
+value: 2048
+---
+-+- SSL_OP_NO_COMPRESSION
+defined: 1
+value: 131072
+---
+-+- SSL_OP_NO_SSLv2
+value: 16777216
+---
+-+- SSL_OP_NO_SSLv3
+value: 33554432
+---
+-+- SSL_OP_NO_TLSv1
+value: 67108864
+---
+-+- SSL_OP_NO_TLSv1_1
+value: 268435456
+---
+-+- SSL_OP_NO_TLSv1_2
+value: 134217728
+---
+-+- SSL_OP_SINGLE_DH_USE
+value: 1048576
+---
+-+- SSL_OP_SINGLE_ECDH_USE
+value: 524288
+---
+-+- SSL_RECEIVED_SHUTDOWN
+value: 2
+---
+-+- SSL_TLSEXT_ERR_ALERT_FATAL
+value: 2
+---
+-+- SSL_TLSEXT_ERR_NOACK
+value: 3
+---
+-+- SSL_TLSEXT_ERR_OK
+value: 0
+---
+-+- SSL_VERIFY_FAIL_IF_NO_PEER_CERT
+value: 2
+---
+-+- SSL_VERIFY_NONE
+value: 0
+---
+-+- SSL_VERIFY_PEER
+value: 1
+---
+-+- TLSEXT_NAMETYPE_host_name
+value: 0
+---
+-+- X509_LU_CRL
+value: 2
+---
+-+- X509_LU_X509
+value: 1
+---
+-+- X509_R_CERT_ALREADY_IN_HASH_TABLE
+value: 101
+---
+-+- X509_V_FLAG_CRL_CHECK
+value: 4
+---
+-+- X509_V_FLAG_CRL_CHECK_ALL
+value: 8
+---
+-+- X509_V_FLAG_X509_STRICT
+value: 32
+---
+-+- asn1_string_st
+align: 8
+size: 24
+fldofs length: 0
+fldsize length: 4
+fldunsigned length: 0
+fldofs data: 8
+fldsize data: 8
+---
+-+- v3_ext_method
+align: 8
+size: 104
+fldofs it: 8
+fldsize it: 8
+fldofs d2i: 32
+fldsize d2i: 8
+---

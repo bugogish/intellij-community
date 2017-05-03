@@ -1,0 +1,4 @@
+-+- O_CLOEXEC
+defined: 1
+value: 524288
+---

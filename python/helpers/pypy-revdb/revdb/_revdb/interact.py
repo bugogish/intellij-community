@@ -279,7 +279,7 @@ class RevDebugControl(object):
         if cmd_id == CMD_STEP_BACK:
             self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
                                                str(text) + "\t" + str(CMD_STEP_BACK)))
-            self.command_bstep(None)
+            self.command_bstep(1)
             self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
                                                    self.make_thread_suspend_str(text, CMD_STEP_BACK)))
         if cmd_id == CMD_STEP_OVER:
@@ -292,6 +292,7 @@ class RevDebugControl(object):
             t = pydevd_find_thread_by_id(text)
             sys.stdout.write("%s\n" % t.getName())
             if t.getName() == "MainThread":
+                self.writer.add_command(NetCommand(CMD_THREAD_RUN, -1, text))
                 self.command_continue(None)
 
                 self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,

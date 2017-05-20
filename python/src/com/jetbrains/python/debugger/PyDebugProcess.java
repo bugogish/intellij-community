@@ -534,6 +534,10 @@ public class PyDebugProcess extends XDebugProcess implements IPyDebugProcess, Pr
     passToCurrentThread(context, ResumeOrStepCommand.Mode.STEP_INTO);
   }
 
+  public void startStepBack(@Nullable XSuspendContext context) {
+    passToCurrentThread(context, ResumeOrStepCommand.Mode.STEP_BACK);
+  }
+
   public void startStepIntoMyCode(@Nullable XSuspendContext context) {
     if (!checkCanPerformCommands()) return;
     getSession().sessionResumed();

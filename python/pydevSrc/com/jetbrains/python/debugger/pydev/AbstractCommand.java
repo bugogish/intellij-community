@@ -31,11 +31,11 @@ public abstract class AbstractCommand<T> {
   public static final int SMART_STEP_INTO = 128;
   public static final int EXIT = 129;
   public static final int GET_DESCRIPTION = 148;
-
-
   public static final int CALL_SIGNATURE_TRACE = 130;
 
+
   public static final int CMD_SET_PY_EXCEPTION = 131;
+
   public static final int CMD_GET_FILE_CONTENTS = 132;
   public static final int CMD_SET_PROPERTY_TRACE = 133;
   public static final int CMD_EVALUATE_CONSOLE_EXPRESSION = 134;
@@ -46,15 +46,16 @@ public abstract class AbstractCommand<T> {
   public static final int CMD_SEND_CURR_EXCEPTION_TRACE_PROCEEDED = 139;
   public static final int CMD_IGNORE_THROWN_EXCEPTION_AT = 140;
   public static final int CMD_ENABLE_DONT_TRACE = 141;
-
   public static final int SHOW_CONSOLE = 142;
+
   public static final int GET_ARRAY = 143;
   public static final int STEP_INTO_MY_CODE = 144;
   public static final int LOG_CONCURRENCY_EVENT = 145;
   public static final int SHOW_RETURN_VALUES = 146;
   public static final int INPUT_REQUESTED = 147;
-
   public static final int PROCESS_CREATED = 149;
+
+  public static final int STEP_BACK = 150;
 
   public static final int ERROR = 901;
 
@@ -62,7 +63,7 @@ public abstract class AbstractCommand<T> {
   public static final String NEW_LINE_CHAR = "@_@NEW_LINE_CHAR@_@";
   public static final String TAB_CHAR = "@_@TAB_CHAR@_@";
 
-  
+
 
   @NotNull private final RemoteDebugger myDebugger;
   private final int myCommandCode;

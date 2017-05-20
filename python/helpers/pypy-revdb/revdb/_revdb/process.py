@@ -2,6 +2,7 @@ import sys, os, struct, socket, errno, subprocess
 import linecache
 from _revdb import ancillary
 from _revdb.message import *
+import re
 
 
 class Breakpoint(Exception):
@@ -230,7 +231,6 @@ class ReplayProcess(object):
                 self.update_times(msg)
                 break
         return result
-
 
     def print_text_answer(self, pgroup=None):
         while True:
@@ -651,6 +651,15 @@ class ReplayProcessGroup(object):
         except RecreateSubprocess:
             self.recreate_subprocess()
 
+    def get_line_no(self):
+        self.active.send(Message(CMD_BACKTRACE, 0))
+        try:
+            code_str = self.active.recv_txt_answ()
+            match = re.search(".*?, line (\d*) in .*", code_str)
+            return int(match.group(1))
+        except RecreateSubprocess:
+            self.recreate_subprocess()
+
     def get_locals(self):
         """Get the locals.
         """
@@ -659,15 +668,14 @@ class ReplayProcessGroup(object):
         try:
             locals_str = self.active.recv_txt_answ()
             locals_str = locals_str.split('\n', 1)[-1].strip()
-            # for line in locals_str.split('\n'):
-            #     sys.stdout.write("LINE: %s\n" % line)
-            #     parts = line.split('=')
-            #     sys.stdout.write("PART 1: %s\n" % parts[0])
-            #     sys.stdout.write("PART 2: %s\n" % parts[1])
-            return {line.split('=')[0]:line.split('=')[1] for line in locals_str.split('\n')}
-            # self.active.expect_ready()
+            try:
+                return {line.split('=')[0]: line.split('=')[1] for line in locals_str.split('\n')}
+            except:
+                return {}
         except RecreateSubprocess:
             self.recreate_subprocess()
+
+
 
     def show_locals(self):
         """Show the locals.

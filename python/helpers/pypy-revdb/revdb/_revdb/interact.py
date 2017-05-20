@@ -7,11 +7,11 @@ import time
 from urllib import quote
 import sys, threading
 from revdb_comm import CMD_RUN, CMD_GET_FRAME, CMD_ADD_EXCEPTION_BREAK, CMD_SET_BREAK, CMD_VERSION, \
-    CMD_THREAD_CREATE, CMD_THREAD_SUSPEND
+    CMD_THREAD_CREATE, CMD_THREAD_SUSPEND, CMD_STEP_BACK, CMD_THREAD_RUN, CMD_STEP_OVER
 from revdb_comm import set_global_debugger
 from revdb_comm import WriterThread, ReaderThread
+
 up = os.path.dirname
-sys.stdout.write(__file__)
 root = up(up(up(up(__file__)))) + "/pydev"
 
 sys.path.insert(0, root)
@@ -19,6 +19,7 @@ sys.path.insert(0, root)
 from _pydev_bundle.pydev_is_thread_alive import is_thread_alive
 from _pydevd_bundle.pydevd_constants import get_thread_id, dict_contains
 from _pydevd_bundle.pydevd_xml import make_valid_xml_value, frame_vars_to_xml
+from _pydevd_bundle.pydevd_comm import pydevd_find_thread_by_id
 
 def __getfilesystemencoding():
     '''
@@ -117,10 +118,13 @@ ID_TO_MEANING = {
 
     '149': 'CMD_PROCESS_CREATED',
 
+    '150': 'CMD_STEP_BACK',
+
     '501': 'CMD_VERSION',
     '502': 'CMD_RETURN',
     '901': 'CMD_ERROR',
 }
+
 
 def to_string(x):
     if isinstance(x, basestring):
@@ -185,7 +189,7 @@ class RevDebugControl(object):
         self._main_lock = thread.allocate_lock()
         set_global_debugger(self)
         self.sock = None
-        self.bp = None
+        self.bp = {}
         self.ready = False
         self.init_network(host, port)
 
@@ -242,20 +246,21 @@ class RevDebugControl(object):
                     return port
                 except:
                     traceback.print_exc()
-
         except:
             traceback.print_exc()
 
     def process_cmd(self, cmd_id, seq, text):
+        sys.stdout.write("%d \n" % self.pgroup.get_current_time())
         if cmd_id == CMD_VERSION:
             cmd = NetCommand(CMD_VERSION, seq, "build")
             self.writer.add_command(cmd)
         if cmd_id == CMD_SET_BREAK:
             type, file, line, func_name, suspend_policy, condition, expression = text.split('\t', 6)
             file = file.encode(getfilesystemencoding())
+            sys.stdout.write("Breakpoint line parsed is %s\n" % str(line))
             self.command_break(file + ':' + str(line))
             self.file = file
-            self.bp = int(line)
+            self.bp[file + ":" + line] = int(line)
         if cmd_id == CMD_ADD_EXCEPTION_BREAK:
             sys.stderr.write("Exceptional breakpoints are not supported\n")
         if cmd_id == CMD_RUN:
@@ -271,6 +276,28 @@ class RevDebugControl(object):
             except:
                 traceback.print_exc()
 
+        if cmd_id == CMD_STEP_BACK:
+            self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
+                                               str(text) + "\t" + str(CMD_STEP_BACK)))
+            self.command_bstep(None)
+            self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
+                                                   self.make_thread_suspend_str(text, CMD_STEP_BACK)))
+        if cmd_id == CMD_STEP_OVER:
+            self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
+                                               str(text) + "\t" + str(CMD_STEP_OVER)))
+            self.command_step(1)
+            self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
+                                                   self.make_thread_suspend_str(text, CMD_STEP_OVER)))
+        if cmd_id == CMD_THREAD_RUN:
+            t = pydevd_find_thread_by_id(text)
+            sys.stdout.write("%s\n" % t.getName())
+            if t.getName() == "MainThread":
+                self.command_continue(None)
+
+                self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
+                                                       self.make_thread_suspend_str(text, CMD_SET_BREAK)))
+
+
     def process_internal_commands(self):
         self._main_lock.acquire()
         try:
@@ -283,7 +310,7 @@ class RevDebugControl(object):
                         thread_id = get_thread_id(t)
                         program_threads_alive[thread_id] = t
 
-                        if not dict_contains(self._running_thread_ids, thread_id):
+                        if not dict_contains(self._running_thread_ids, thread_id) and t.getName() == "MainThread":
                             self._running_thread_ids[thread_id] = t
                             name = make_valid_xml_value(t.getName())
                             cmdText = '<thread name="%s" id="%s" />' % (quote(name), thread_id)
@@ -297,7 +324,7 @@ class RevDebugControl(object):
             finally:
                 pass
 
-            # if len(program_threads_alive) == 0:
+                # if len(program_threads_alive) == 0:
                 # self.finish_debugging_session()
 
                 # for t in all_threads:
@@ -315,7 +342,8 @@ class RevDebugControl(object):
             my_id = self.pgroup.get_stack_id(1)
             my_name = '?'
             myFile = self.file
-            myLine = self.bp
+            myLine = self.pgroup.get_line_no()
+            # myLine = str(20)
             variables = ''
             append('<frame id="%s" name="%s" ' % (my_id, make_valid_xml_value(my_name)))
             append('file="%s" line="%s">' % (quote(myFile, '/>_= \t'), myLine))
@@ -336,7 +364,7 @@ class RevDebugControl(object):
             if flag and self.ready:
                 self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
                                                    self.make_thread_suspend_str(
-                                                       get_thread_id(threading.currentThread()), "111")))
+                                                       get_thread_id(threading.currentThread()), CMD_SET_BREAK)))
                 flag = False
 
                 # prompt = self.print_lines_before_prompt()
@@ -726,16 +754,16 @@ class RevDebugControl(object):
     def command_break(self, argument):
         """Add a breakpoint"""
         if not argument:
-            sys.stdout.write("Break where?")
+            sys.stdout.write("Break where?\n")
             return
         num = self._bp_new(argument, 'B', argument)
         self.pgroup.update_breakpoints()
         b = self.pgroup.edit_breakpoints()
         if num not in b.num2break:
-            sys.stdout.write("Breakpoint not added")
+            sys.stdout.write("Breakpoint not added\n")
         else:
             kind, name = self._bp_kind(num)
-            sys.stdout.write("Breakpoint %d added: %s" % (num, name))
+            sys.stdout.write("Breakpoint %d added: %s\n" % (num, name))
 
     command_b = command_break
 
@@ -749,10 +777,10 @@ class RevDebugControl(object):
                 if self._bp_kind(arg)[1] == argument:
                     break
             else:
-                print "No such breakpoint/watchpoint: %s" % (argument,)
+                print "No such breakpoint/watchpoint: %s\n" % (argument,)
                 return
         if arg not in b.num2break:
-            print "No breakpoint/watchpoint number %d" % (arg,)
+            print "No breakpoint/watchpoint number %d\n" % (arg,)
         else:
             kind, name = self._bp_kind(arg)
             b.num2break.pop(arg, '')
@@ -766,25 +794,25 @@ class RevDebugControl(object):
     def command_watch(self, argument):
         """Add a watchpoint (use $NUM in the expression to watch)"""
         if not argument:
-            print "Watch what?"
+            print "Watch what?\n"
             return
         #
         ok_flag, compiled_code = self.pgroup.compile_watchpoint_expr(argument)
         if not ok_flag:
             print compiled_code  # the error message
-            print 'Watchpoint not added'
+            print 'Watchpoint not added\n'
             return
         #
         nids = map(int, r_dollar_num.findall(argument))
         ok_flag, text = self.pgroup.check_watchpoint_expr(compiled_code, nids)
         if not ok_flag:
             print text
-            print 'Watchpoint not added'
+            print 'Watchpoint not added\n'
             return
         #
         new = self._bp_new(argument, 'W', compiled_code, nids=nids)
         self.pgroup.update_watch_values()
-        print "Watchpoint %d added" % (new,)
+        print "Watchpoint %d added\n" % (new,)
 
     def getlinecacheoutput(self, pygments_background):
         if not pygments_background or pygments_background == 'off':
@@ -794,7 +822,7 @@ class RevDebugControl(object):
             from pygments.lexers import PythonLexer
             from pygments.formatters import TerminalFormatter
         except ImportError as e:
-            print >> sys.stderr, 'ImportError: %s' % (e,)
+            print >> sys.stderr, 'ImportError: %s\n' % (e,)
             return None
         #
         lexer = PythonLexer()

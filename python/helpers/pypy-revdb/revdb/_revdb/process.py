@@ -669,13 +669,11 @@ class ReplayProcessGroup(object):
             locals_str = self.active.recv_txt_answ()
             locals_str = locals_str.split('\n', 1)[-1].strip()
             try:
-                return {line.split('=')[0]: line.split('=')[1] for line in locals_str.split('\n')}
+                return {line.split('=')[0].strip(): line.split('=')[1].strip() for line in locals_str.split('\n')}
             except:
                 return {}
         except RecreateSubprocess:
             self.recreate_subprocess()
-
-
 
     def show_locals(self):
         """Show the locals.

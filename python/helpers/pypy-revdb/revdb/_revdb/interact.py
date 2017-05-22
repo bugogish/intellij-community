@@ -7,7 +7,7 @@ import time
 from urllib import quote
 import sys, threading
 from revdb_comm import CMD_RUN, CMD_GET_FRAME, CMD_ADD_EXCEPTION_BREAK, CMD_SET_BREAK, CMD_VERSION, \
-    CMD_THREAD_CREATE, CMD_THREAD_SUSPEND, CMD_STEP_BACK, CMD_THREAD_RUN, CMD_STEP_OVER
+    CMD_THREAD_CREATE, CMD_THREAD_SUSPEND, CMD_STEP_BACK, CMD_THREAD_RUN, CMD_STEP_OVER, CMD_STEP_INTO
 from revdb_comm import set_global_debugger
 from revdb_comm import WriterThread, ReaderThread
 
@@ -270,33 +270,41 @@ class RevDebugControl(object):
             try:
                 xml = "<xml>"
                 locals = self.pgroup.get_locals()
+                sys.stdout.write(str(locals))
                 xml += frame_vars_to_xml(locals)
                 xml += "</xml>"
                 self.writer.add_command(NetCommand(CMD_GET_FRAME, seq, xml))
             except:
                 traceback.print_exc()
 
+
         if cmd_id == CMD_STEP_BACK:
             self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
                                                str(text) + "\t" + str(CMD_STEP_BACK)))
-            self.command_bstep(1)
+            self.command_bnext(None)
             self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
                                                    self.make_thread_suspend_str(text, CMD_STEP_BACK)))
         if cmd_id == CMD_STEP_OVER:
             self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
                                                str(text) + "\t" + str(CMD_STEP_OVER)))
-            self.command_step(1)
+            self.command_next(None)
             self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
                                                    self.make_thread_suspend_str(text, CMD_STEP_OVER)))
         if cmd_id == CMD_THREAD_RUN:
             t = pydevd_find_thread_by_id(text)
-            sys.stdout.write("%s\n" % t.getName())
-            if t.getName() == "MainThread":
+            if t:
                 self.writer.add_command(NetCommand(CMD_THREAD_RUN, -1, text))
                 self.command_continue(None)
 
                 self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
                                                        self.make_thread_suspend_str(text, CMD_SET_BREAK)))
+
+        if cmd_id == CMD_STEP_INTO:
+            self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
+                                               str(text) + "\t" + str(CMD_STEP_OVER)))
+            self.command_step(None)
+            self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
+                                                   self.make_thread_suspend_str(text, CMD_STEP_OVER)))
 
 
     def process_internal_commands(self):

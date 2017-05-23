@@ -7,19 +7,22 @@ import time
 from urllib import quote
 import sys, threading
 from revdb_comm import CMD_RUN, CMD_GET_FRAME, CMD_ADD_EXCEPTION_BREAK, CMD_SET_BREAK, CMD_VERSION, \
-    CMD_THREAD_CREATE, CMD_THREAD_SUSPEND, CMD_STEP_BACK, CMD_THREAD_RUN, CMD_STEP_OVER, CMD_STEP_INTO
+    CMD_THREAD_CREATE, CMD_THREAD_SUSPEND, CMD_STEP_BACK, CMD_THREAD_RUN, CMD_STEP_OVER, CMD_STEP_INTO, \
+    CMD_REMOVE_BREAK
 from revdb_comm import set_global_debugger
 from revdb_comm import WriterThread, ReaderThread
 
 up = os.path.dirname
-root = up(up(up(up(__file__)))) + "/pydev"
 
+root = up(up(up(up(__file__)))) + "/pydev"
 sys.path.insert(0, root)
 
 from _pydev_bundle.pydev_is_thread_alive import is_thread_alive
 from _pydevd_bundle.pydevd_constants import get_thread_id, dict_contains
 from _pydevd_bundle.pydevd_xml import make_valid_xml_value, frame_vars_to_xml
 from _pydevd_bundle.pydevd_comm import pydevd_find_thread_by_id
+
+
 
 def __getfilesystemencoding():
     '''
@@ -251,21 +254,6 @@ class RevDebugControl(object):
 
     def process_cmd(self, cmd_id, seq, text):
         sys.stdout.write("%d \n" % self.pgroup.get_current_time())
-        if cmd_id == CMD_VERSION:
-            cmd = NetCommand(CMD_VERSION, seq, "build")
-            self.writer.add_command(cmd)
-        if cmd_id == CMD_SET_BREAK:
-            type, file, line, func_name, suspend_policy, condition, expression = text.split('\t', 6)
-            file = file.encode(getfilesystemencoding())
-            sys.stdout.write("Breakpoint line parsed is %s\n" % str(line))
-            self.command_break(file + ':' + str(line))
-            self.file = file
-            self.bp[file + ":" + line] = int(line)
-        if cmd_id == CMD_ADD_EXCEPTION_BREAK:
-            sys.stderr.write("Exceptional breakpoints are not supported\n")
-        if cmd_id == CMD_RUN:
-            self.command_continue(None)
-            self.ready = True
         if cmd_id == CMD_GET_FRAME:
             try:
                 xml = "<xml>"
@@ -276,21 +264,35 @@ class RevDebugControl(object):
                 self.writer.add_command(NetCommand(CMD_GET_FRAME, seq, xml))
             except:
                 traceback.print_exc()
-
-
-        if cmd_id == CMD_STEP_BACK:
-            self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
-                                               str(text) + "\t" + str(CMD_STEP_BACK)))
-            self.command_bnext(None)
-            self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
-                                                   self.make_thread_suspend_str(text, CMD_STEP_BACK)))
-        if cmd_id == CMD_STEP_OVER:
+        elif cmd_id == CMD_STEP_OVER:
             self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
                                                str(text) + "\t" + str(CMD_STEP_OVER)))
             self.command_next(None)
             self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
-                                                   self.make_thread_suspend_str(text, CMD_STEP_OVER)))
-        if cmd_id == CMD_THREAD_RUN:
+                                               self.make_thread_suspend_str(text, CMD_STEP_OVER)))
+        elif cmd_id == CMD_STEP_BACK:
+            self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
+                                               str(text) + "\t" + str(CMD_STEP_BACK)))
+            self.command_bnext(None)
+            self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
+                                               self.make_thread_suspend_str(text, CMD_STEP_BACK)))
+        elif cmd_id == CMD_VERSION:
+            cmd = NetCommand(CMD_VERSION, seq, "build")
+            self.writer.add_command(cmd)
+        elif cmd_id == CMD_SET_BREAK:
+            type, file, line, func_name, suspend_policy, condition, expression = text.split('\t', 6)
+            file = file.encode(getfilesystemencoding())
+            self.command_break(file + ':' + str(line))
+            self.file = file
+        elif cmd_id == CMD_REMOVE_BREAK:
+            breakpoint_type, file, line = text.split('\t', 2)
+            self.command_delete(file+":" + str(line))
+        elif cmd_id == CMD_ADD_EXCEPTION_BREAK:
+            sys.stderr.write("Exceptional breakpoints are not supported\n")
+        elif cmd_id == CMD_RUN:
+            self.command_continue(None)
+            self.ready = True
+        elif cmd_id == CMD_THREAD_RUN:
             t = pydevd_find_thread_by_id(text)
             if t:
                 self.writer.add_command(NetCommand(CMD_THREAD_RUN, -1, text))
@@ -298,8 +300,7 @@ class RevDebugControl(object):
 
                 self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
                                                        self.make_thread_suspend_str(text, CMD_SET_BREAK)))
-
-        if cmd_id == CMD_STEP_INTO:
+        elif cmd_id == CMD_STEP_INTO:
             self.writer.add_command(NetCommand(CMD_THREAD_RUN, 0,
                                                str(text) + "\t" + str(CMD_STEP_OVER)))
             self.command_step(None)
@@ -330,15 +331,8 @@ class RevDebugControl(object):
                 for tId in thread_ids:
                     if not dict_contains(program_threads_alive, tId):
                         program_threads_dead.append(tId)
-            finally:
+            except:
                 pass
-
-                # if len(program_threads_alive) == 0:
-                # self.finish_debugging_session()
-
-                # for t in all_threads:
-                #     if hasattr(t, 'do_kill_pydev_thread'):
-                #         t.do_kill_pydev_thread()
 
         finally:
             self._main_lock.release()
@@ -352,7 +346,6 @@ class RevDebugControl(object):
             my_name = '?'
             myFile = self.file
             myLine = self.pgroup.get_line_no()
-            # myLine = str(20)
             variables = ''
             append('<frame id="%s" name="%s" ' % (my_id, make_valid_xml_value(my_name)))
             append('file="%s" line="%s">' % (quote(myFile, '/>_= \t'), myLine))
@@ -366,32 +359,22 @@ class RevDebugControl(object):
 
     def interact(self):
         flag = True
-        while True:
-            self.process_internal_commands()
-            time.sleep(0.1)
-            # v It's to be changed v
-            if flag and self.ready:
-                self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
-                                                   self.make_thread_suspend_str(
-                                                       get_thread_id(threading.currentThread()), CMD_SET_BREAK)))
-                flag = False
 
-                # prompt = self.print_lines_before_prompt()
-                # try:
-                #     while True:
-                #         cmdline = self.display_prompt(prompt)
-                #         self.run_command(cmdline)
-                #         prompt = self.print_lines_before_prompt()
-                # except KeyboardInterrupt:
-                #     rtime = self.previous_time or 1
-                #     print ERASE_LINE
-                #     print 'KeyboardInterrupt: restoring state at time %d...' % (
-                #         rtime,)
-                #     self.pgroup.recreate_subprocess(rtime)
-                #     print "(type 'q' or Ctrl-D to quit)"
-                #     self.last_command = ''
-                #     self.previous_thread = '?'
-                #     self.previous_time = '?'
+        try:
+            while True:
+                    self.process_internal_commands()
+                    time.sleep(0.1)
+                    # v It's to be changed v
+                    if flag and self.ready:
+                        self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
+                                                           self.make_thread_suspend_str(
+                                                               get_thread_id(threading.currentThread()), CMD_SET_BREAK)))
+                        flag = False
+        except:
+            self.writer.killReceived = True
+            self.reader.killReceived = True
+            self.reader.do_kill_pydev_thread()
+            self.command_quit(None)
 
     def print_lines_before_prompt(self):
         last_time = self.pgroup.get_current_time()

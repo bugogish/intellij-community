@@ -269,7 +269,7 @@ public class PyDebugRunner extends GenericProgramRunner {
           parametersList.getParamsGroup(PythonCommandLineState.GROUP_SCRIPT));
         parametersList.removeParamsGroup(scriptParamsIndex);
         isModule = false;
-        newScriptParams.addParameter("/home/bugogish/au/revdebugger/intellij-community/python/helpers/pypy-revdb/revdb/log.rdb");
+        newScriptParams.addParameter("/home/bugogish/au/revdebugger/intellij-community/python/helpers/pypy-revdb/log.rdb");
 
         parametersList.addParamsGroupAt(scriptParamsIndex, newScriptParams);
       }
@@ -283,7 +283,7 @@ public class PyDebugRunner extends GenericProgramRunner {
         @SuppressWarnings("ConstantConditions") @NotNull
         ParamsGroup debugParams = parametersList.getParamsGroup(PythonCommandLineState.GROUP_DEBUGGER);
 
-        patchExeParams(parametersList);
+        //patchExeParams(parametersList);
 
         patchScriptParams(parametersList);
         @SuppressWarnings("ConstantConditions") @NotNull
@@ -309,7 +309,7 @@ public class PyDebugRunner extends GenericProgramRunner {
                                    @NotNull PythonCommandLineState pyState,
                                    @NotNull GeneralCommandLine cmd) {
     PythonHelper.DEBUGGER.addToGroup(debugParams, cmd);
-    configureDebugParameters(project, debugParams, pyState, cmd);
+    //configureDebugParameters(project, debugParams, pyState, cmd);
 
 
     configureDebugEnvironment(project, cmd.getEnvironment());
@@ -342,10 +342,10 @@ public class PyDebugRunner extends GenericProgramRunner {
                                           @NotNull GeneralCommandLine cmd) {
     if (pyState.isMultiprocessDebug()) {
       //noinspection SpellCheckingInspection
-      //debugParams.addParameter("--multiproc");
+      debugParams.addParameter("--multiproc");
     }
 
-    //configureCommonDebugParameters(project, debugParams);
+    configureCommonDebugParameters(project, debugParams);
   }
 
   public static void configureCommonDebugParameters(@NotNull Project project,

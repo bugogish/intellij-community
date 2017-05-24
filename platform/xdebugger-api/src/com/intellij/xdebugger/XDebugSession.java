@@ -139,7 +139,6 @@ public interface XDebugSession extends AbstractDebuggerSession {
 
   boolean areBreakpointsMuted();
 
-
   void addSessionListener(@NotNull XDebugSessionListener listener, @NotNull Disposable parentDisposable);
 
   void addSessionListener(@NotNull XDebugSessionListener listener);

@@ -196,14 +196,14 @@ class revDB():
 
     def cmd_line_no(self):
         with capture_revdb_output() as buffer:
-            self.cmd_executor.pgroup.show_backtrace()
+            self.cmd_executor.command_backtrace(None)
         code_str = buffer.getvalue()
         match = re.search(".*?, line (\d*) in .*", code_str)
         return int(match.group(1))
 
     def cmd_get_locals(self):
         with capture_revdb_output() as buffer:
-            self.cmd_executor.command_locals()
+            self.cmd_executor.command_locals(None)
         locals_str = buffer.getvalue()
         locals_str = locals_str.split('\n', 1)[-1].strip()
         try:

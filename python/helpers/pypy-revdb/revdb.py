@@ -24,7 +24,6 @@ from _pydevd_bundle.pydevd_comm import NetCommand, pydevd_find_thread_by_id
 from _pydevd_bundle.pydevd_constants import get_thread_id
 from _pydevd_bundle.pydevd_xml import make_valid_xml_value, frame_vars_to_xml, var_to_xml
 
-
 from utils.revdb_comm import ReaderThread, WriterThread, Dispatcher, CMD_THREAD_SUSPEND, \
     CMD_SET_BREAK, CMD_THREAD_CREATE, CMD_GET_FRAME, CMD_STEP_OVER, CMD_THREAD_RUN, CMD_STEP_BACK, \
     CMD_EVALUATE_EXPRESSION, CMD_VERSION, getfilesystemencoding, CMD_REMOVE_BREAK, CMD_ADD_EXCEPTION_BREAK, CMD_RUN, \
@@ -66,8 +65,7 @@ class revDB():
         try:
             my_id = self.cmd_executor.pgroup.get_stack_id(1)
             my_name = '?'
-            myFile = self.file
-            myLine = self.cmd_line_no()
+            myLine, myFile = self.cmd_line_no()
             variables = ''
             append('<frame id="%s" name="%s" ' % (my_id, make_valid_xml_value(my_name)))
             append('file="%s" line="%s">' % (quote(myFile, '/>_= \t'), myLine))
@@ -160,12 +158,20 @@ class revDB():
             self.reader.do_kill_pydev_thread()
             self.cmd_executor.command_quit(None)
 
+    def cmd_file(self):
+        with capture_revdb_output() as buffer:
+            self.cmd_executor.command_backtrace(None)
+        code_str = buffer.getvalue()
+        to_console(code_str)
+
     def cmd_line_no(self):
         with capture_revdb_output() as buffer:
             self.cmd_executor.command_backtrace(None)
         code_str = buffer.getvalue()
+        to_console(code_str)
         line_no = re.findall(".*?, line (\d*) in .*", code_str)[-1]
-        return int(line_no)
+        file_name_match = re.search("File\s+\"(.*?)\".*", code_str)
+        return int(line_no), file_name_match.group(1)
 
     def cmd_get_locals(self):
         with capture_revdb_output() as buffer:

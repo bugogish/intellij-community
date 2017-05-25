@@ -321,8 +321,6 @@ class ReaderThread(RevDBDaemonThread):
                     r = r.decode('utf-8')
 
                 read_buffer += r
-                sys.stderr.write('debugger: received >>%s<<\n' % (read_buffer,))
-                sys.stderr.flush()
 
                 if len(read_buffer) == 0:
                     break
@@ -332,8 +330,6 @@ class ReaderThread(RevDBDaemonThread):
                     args = command.split('\t', 2)
                     try:
                         cmd_id = int(args[0])
-                        sys.stderr.write(
-                            'Received command: %s %s\n' % (ID_TO_MEANING.get(str(cmd_id), '???'), command,))
                         self.process_command(cmd_id, int(args[1]), args[2])
                     except:
                         traceback.print_exc()
@@ -389,27 +385,13 @@ class WriterThread(RevDBDaemonThread):
                         else:
                             continue
                 except:
-                    # pydevd_log(0, 'Finishing debug communication...(1)')
-                    # when liberating the thread here, we could have errors because we were shutting down
-                    # but the thread was still not liberated
                     return
-                # out = cmd.outgoing
                 out = cmd.outgoing
-                out_message = 'sending cmd --> '
-                out_message += "%20s" % ID_TO_MEANING.get(out[:3], 'UNKNOWN')
-                out_message += ' '
-                out_message += unquote(unquote(out)).replace('\n', ' ')
-                try:
-                    sys.stderr.write('%s\n' % (out_message,))
-                except:
-                    traceback.print_exc()
 
                 if IS_PY3K:
                     out = bytearray(out, 'utf-8')
 
-                self.sock.send(
-                    out)  # TODO: this does not guarantee that all message are sent (and jython does not have a send
-                # all)
+                self.sock.send(out)
                 if cmd.id == CMD_EXIT:
                     break
                 if time is None:

@@ -265,11 +265,12 @@ public class PyDebugRunner extends GenericProgramRunner {
 
       private void patchScriptParams(ParametersList parametersList) {
         ParamsGroup newScriptParams = new ParamsGroup(PythonCommandLineState.GROUP_SCRIPT);
+        String scriptName = parametersList.getParamsGroup(PythonCommandLineState.GROUP_SCRIPT).getParameters().get(0);
         int scriptParamsIndex = parametersList.getParamsGroups().indexOf(
           parametersList.getParamsGroup(PythonCommandLineState.GROUP_SCRIPT));
         parametersList.removeParamsGroup(scriptParamsIndex);
         isModule = false;
-        newScriptParams.addParameter("/home/bugogish/au/revdebugger/intellij-community/python/helpers/pypy-revdb/log.rdb");
+        newScriptParams.addParameter(scriptName.replace(".py", "_log.rdb"));
 
         parametersList.addParamsGroupAt(scriptParamsIndex, newScriptParams);
       }

@@ -1,12 +1,11 @@
 import os
-import sys
 import re
+import sys
 import threading
 import time
 import traceback
-from urllib import quote
-
 from cStringIO import StringIO
+from urllib import quote
 
 to_console = sys.stdout.write
 up = os.path.dirname
@@ -15,24 +14,16 @@ REVDB_PATH = up(up(PYPY_PATH)) + "/pypy-revdb/"
 PYDEV_PATH = up(up(__file__)) + "/pydev"
 
 sys.path.insert(0, PYPY_PATH)
-from rpython.rlib import revdb
 
 sys.path.insert(0, REVDB_PATH)
-to_console(str(REVDB_PATH))
 from _revdb.message import *
 from _revdb.interact import RevDebugControl
-from _revdb.process import RecreateSubprocess
 
 sys.path.insert(0, PYDEV_PATH)
-from _pydevd_bundle.pydevd_comm import NetCommand, NetCommandFactory, pydevd_find_thread_by_id
-from _pydevd_bundle.pydevd_constants import get_thread_id, dict_contains
-from _pydev_bundle.pydev_is_thread_alive import is_thread_alive
+from _pydevd_bundle.pydevd_comm import NetCommand, pydevd_find_thread_by_id
+from _pydevd_bundle.pydevd_constants import get_thread_id
 from _pydevd_bundle.pydevd_xml import make_valid_xml_value, frame_vars_to_xml, var_to_xml
 
-if sys.version_info < (3,):
-    import thread
-else:
-    import _thread as thread
 
 from utils.revdb_comm import ReaderThread, WriterThread, Dispatcher, CMD_THREAD_SUSPEND, \
     CMD_SET_BREAK, CMD_THREAD_CREATE, CMD_GET_FRAME, CMD_STEP_OVER, CMD_THREAD_RUN, CMD_STEP_BACK, \
@@ -53,8 +44,6 @@ class capture_revdb_output(object):
 class revDB():
     def __init__(self, port, host, cmd_executor):
         self.cmd_executor = cmd_executor
-        self._running_thread_ids = {}  # <--------
-        self._main_lock = thread.allocate_lock()  # <--------
         self.ready = False
         sock = Dispatcher().init_network(host, port)
         self.writer = WriterThread(sock)
@@ -63,34 +52,12 @@ class revDB():
         self.reader.start()
         time.sleep(0.1)
 
-    def process_internal_commands(self):
-        self._main_lock.acquire()
-        try:
-            program_threads_alive = {}
-            all_threads = threading.enumerate()
-            program_threads_dead = []
-            try:
-                for t in all_threads:
-                    if is_thread_alive(t):
-                        thread_id = get_thread_id(t)
-                        program_threads_alive[thread_id] = t
-
-                        if not dict_contains(self._running_thread_ids, thread_id) and t.getName() == "MainThread":
-                            self._running_thread_ids[thread_id] = t
-                            name = make_valid_xml_value(t.getName())
-                            cmdText = '<thread name="%s" id="%s" />' % (quote(name), thread_id)
-                            cmdText = "<xml>" + cmdText + "</xml>"
-                            self.writer.add_command(NetCommand(CMD_THREAD_CREATE, 0, cmdText))
-
-                thread_ids = list(self._running_thread_ids.keys())
-                for tId in thread_ids:
-                    if not dict_contains(program_threads_alive, tId):
-                        program_threads_dead.append(tId)
-            except:
-                pass
-
-        finally:
-            self._main_lock.release()
+    def run_main_thread(self):
+        t = threading.currentThread()
+        name = make_valid_xml_value("MainThread")
+        cmdText = '<thread name="%s" id="%s" />' % (quote(name), get_thread_id(t))
+        cmdText = "<xml>" + cmdText + "</xml>"
+        self.writer.add_command(NetCommand(CMD_THREAD_CREATE, 0, cmdText))
 
     def make_thread_suspend_str(self, thread_id, stop_reason):
         cmd_text_list = ["<xml>"]
@@ -175,19 +142,18 @@ class revDB():
                                                str(text) + "\t" + str(CMD_STEP_OVER)))
             self.cmd_executor.command_step(None)
             self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0,
-                                               self.make_thread_suspend_str(text, CMD_STEP_OVER)))
+                                               self.make_thread_suspend_str(text, CMD_STEP_INTO)))
 
     def interact(self):
+        self.run_main_thread()
         flag = True
         try:
             while True:
-                self.process_internal_commands()
                 time.sleep(0.1)
-                # v It's to be changed v
                 if flag and self.ready:
                     self.writer.add_command(NetCommand(CMD_THREAD_SUSPEND, 0, self.make_thread_suspend_str(
                         get_thread_id(threading.currentThread()), CMD_SET_BREAK)))
-                    flag = False
+                flag = False
         except:
             self.writer.killReceived = True
             self.reader.killReceived = True
@@ -198,8 +164,8 @@ class revDB():
         with capture_revdb_output() as buffer:
             self.cmd_executor.command_backtrace(None)
         code_str = buffer.getvalue()
-        match = re.search(".*?, line (\d*) in .*", code_str)
-        return int(match.group(1))
+        line_no = re.findall(".*?, line (\d*) in .*", code_str)[-1]
+        return int(line_no)
 
     def cmd_get_locals(self):
         with capture_revdb_output() as buffer:
@@ -215,34 +181,6 @@ class revDB():
         with capture_revdb_output() as buffer:
             self.cmd_executor.command_print(expression)
         return buffer.getvalue().strip()
-
-    def recv_txt_answ(self):
-        result = ""
-        while True:
-            msg = self.cmd_executor.pgroup.active.recv()
-            if msg.cmd == ANSWER_TEXT:
-                result += msg.extra
-            elif msg.cmd == ANSWER_READY:
-                self.cmd_executor.pgroup.active.update_times(msg)
-                break
-        return result
-
-
-def lineno():
-    sys.stdout.write("IN LINENO:\n")
-    frame = fetch_cur_frame()
-    revdb.send_output(frame.get_last_lineno())
-
-
-lambda_lineno = lambda: lineno
-
-
-def setup():
-    revdb.register_debug_command(25, lambda_lineno)
-
-
-def comment_foo():
-    """just a comment"""
 
 
 if __name__ == '__main__':
@@ -263,5 +201,4 @@ if __name__ == '__main__':
         os.path.join(__file__, '..', '..', '..', '..')))
     ctrl = RevDebugControl(options.log, executable=options.executable,
                            pygments_background=options.color)
-    setup()
-    revDB = revDB(options.port, options.host, ctrl).interact()
+    revDB(options.port, options.host, ctrl).interact()

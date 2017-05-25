@@ -1,7 +1,0 @@
-syntax: glob
-*~
-*.py[co]
-.*.swp
-_revdb/_ancillary_cffi.*
-build
-reverse-debugger

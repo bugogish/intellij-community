@@ -29,6 +29,10 @@ from utils.revdb_comm import ReaderThread, WriterThread, Dispatcher, CMD_THREAD_
     CMD_EVALUATE_EXPRESSION, CMD_VERSION, getfilesystemencoding, CMD_REMOVE_BREAK, CMD_ADD_EXCEPTION_BREAK, CMD_RUN, \
     CMD_STEP_INTO
 
+if sys.version_info < (3,):
+    import thread
+else:
+    import _thread as thread
 
 class capture_revdb_output(object):
     def __enter__(self):
@@ -43,6 +47,7 @@ class capture_revdb_output(object):
 class revDB():
     def __init__(self, port, host, cmd_executor):
         self.cmd_executor = cmd_executor
+        self._main_lock = thread.allocate_lock()
         self.ready = False
         sock = Dispatcher().init_network(host, port)
         self.writer = WriterThread(sock)
@@ -52,11 +57,15 @@ class revDB():
         time.sleep(0.1)
 
     def run_main_thread(self):
-        t = threading.currentThread()
-        name = make_valid_xml_value("MainThread")
-        cmdText = '<thread name="%s" id="%s" />' % (quote(name), get_thread_id(t))
-        cmdText = "<xml>" + cmdText + "</xml>"
-        self.writer.add_command(NetCommand(CMD_THREAD_CREATE, 0, cmdText))
+        self._main_lock.acquire()
+        try:
+            t = threading.currentThread()
+            name = make_valid_xml_value("MainThread")
+            cmdText = '<thread name="%s" id="%s" />' % (quote(name), get_thread_id(t))
+            cmdText = "<xml>" + cmdText + "</xml>"
+            self.writer.add_command(NetCommand(CMD_THREAD_CREATE, 0, cmdText))
+        finally:
+            self._main_lock.release()
 
     def make_thread_suspend_str(self, thread_id, stop_reason):
         cmd_text_list = ["<xml>"]
